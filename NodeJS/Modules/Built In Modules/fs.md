@@ -262,14 +262,14 @@ console.log(buffer.toString("utf-8")); // "Hello World"
 
 ```javascript
 try {
-  fs.appendFileSync("./demo.txt", "\nNew line added");
+  fs.appendFileSync("./demo.txt", " New line added");
   console.log("done");
 } catch (error) {
   console.log(error);
 }
 
 // Before: "Hello World"
-// After:  "Hello World\nNew line added"
+// After:  "Hello World New line added"
 ```
 
 > **Key difference from writeFileSync:** `appendFileSync` **adds to** the file. `writeFileSync` **replaces** the file.
@@ -571,8 +571,8 @@ From the diagram in your image:
 
 ```mermaid
 graph LR
-    A["C Drive\n10GB PDF file\n(stored on disk)"] -->|Stream chunks\n2MB at a time| B["RAM (8GB)\nTemporary buffer\nHolds current chunk"]
-    B -->|Process & output\nchunk by chunk| C["Console\nDisplays 2MB\nat a time"]
+    A["C Drive 10GB PDF file (stored on disk)"] -->|Stream chunks 2MB at a time| B["RAM (8GB) Temporary buffer Holds current chunk"]
+    B -->|Process & output chunk by chunk| C["Console Displays 2MB at a time"]
 ```
 
 **Step-by-step flow:**
