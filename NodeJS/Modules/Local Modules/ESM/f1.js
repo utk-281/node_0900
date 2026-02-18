@@ -1,3 +1,5 @@
+//? import "variable" from "path of the file"
+
 import greet, { arr, sum } from "./f2.js";
 
 console.log(sum(1, 2));
