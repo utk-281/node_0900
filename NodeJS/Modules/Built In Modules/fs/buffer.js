@@ -4,7 +4,7 @@
 //? buffer is a space inside memory(RAM) used by nodeJS to perform some operation
 //? in case of streams, buffer size is fixed that is 16KB
 
-//TODO: import Buffer (global variable)
+import { Buffer } from "node:buffer";
 
 let buff1 = Buffer.from("ab"); //! each letter takes 1 byte
 console.log("buff1: ", buff1);
