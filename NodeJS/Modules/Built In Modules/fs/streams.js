@@ -126,6 +126,8 @@ let readObject = fs.createReadStream("./index.html", {
 });
 let writeObject = fs.createWriteStream("./demo.txt");
 
+console.log("hello");
+
 readObject.on("data", (chunk) => {
   console.log("chunk read");
   let upperCaseChunk = chunk.toUpperCase();
@@ -133,6 +135,8 @@ readObject.on("data", (chunk) => {
     console.log("chunk written");
   });
 });
+
+console.log("end");
 
 readObject.on("end", () => {
   console.log("done");
