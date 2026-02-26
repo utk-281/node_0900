@@ -24,7 +24,7 @@
 //& format --> fs.writeFileSync("path/name.ext", "data")
 
 // console.log(1);
-// fs.writeFileSync("./demo.txt", "");
+fs.writeFileSync("./demo.txt", "");
 // console.log("file created");
 // console.log(2);
 // console.log(3);
