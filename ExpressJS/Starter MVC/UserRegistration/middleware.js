@@ -4,7 +4,7 @@ import express from "express";
 //? 2) invoke
 let app = express();
 
-// app.use(express.urlencoded({ extended: true })); //TODO:middleware
+// app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   console.log("m1 ");
@@ -43,7 +43,7 @@ app.listen(9000, (err) => {
 // to use middleware -> use()
 
 //! there are few types of middlewares
-//? 1) app level middleware
+//? 1) app level middleware / global
 //? 2) router level middleware
 //? 3) built-in middleware
 //? 4) third party middleware
