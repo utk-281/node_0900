@@ -7,6 +7,7 @@ import { Router } from "express";
 import {
   displayFormPage,
   displayHomePage,
+  getAllUsers,
   submitForm,
 } from "../controllers/controller.js";
 
@@ -19,4 +20,8 @@ router.get("/get-form", displayFormPage);
 
 router.post("/register", submitForm);
 
+router.get("/all", getAllUsers);
+
 export default router;
+
+// http://localhost:9000/api/v1/get-form -> api (data exchange)

@@ -6,9 +6,10 @@ import routesFile from "./routes/routes.js";
 let app = express();
 
 // global level middleware -> this will run for every req
-app.use(express.urlencoded({ extended: true })); //TODO: urlencoded values
+app.use(express.urlencoded({ extended: true })); // this will parse urlencoded data
+app.use(express.json()); // json data
 
-app.use("/api/v1", routesFile); // api
+app.use("/api/v1", routesFile); // api versioning
 
 app.listen(9000, (err) => {
   if (err) console.log(err);
@@ -20,4 +21,4 @@ app.listen(9000, (err) => {
 // http://localhsot:9000/api/v1/carts/get
 // http://localhsot:9000/api/v1/orders/get
 
-// http://localhost:9000/api/v1
+// http://localhost:PORT_NUMBER/API_VERSIONING/ENDPOINT
