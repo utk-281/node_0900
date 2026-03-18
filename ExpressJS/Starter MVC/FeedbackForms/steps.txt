@@ -1,0 +1,5 @@
+steps to use postman
+1) go to workspace and select create workspace
+2) select blank workspace and click on next
+3) give a name and click on create
+4) create a new collection and give a name

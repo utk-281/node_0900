@@ -12,7 +12,7 @@ step 5) create a config folder
 
 step 6) create a main file server/app/index.js
 
-step 7) start the server with all configurations with database connected.
+step 7) start the server with all configurations and with database connected.
 
 step 8) create a models folder
     ==> define the schema and export it.
