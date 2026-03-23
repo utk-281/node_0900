@@ -1,19 +1,25 @@
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config({ quiet: true }); //? this method will read/parse the contents of .env file and add it to process.env
 
 import express from "express";
 import connectDB from "./config/database-config.js";
 
+import errorHandler from "./middlewares/error-middleware.js";
 import feedbackRoutes from "./routes/feedback-routes.js";
 
 connectDB();
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.urlencoded({ extended: true })); //! this will parse urlencoded data
 app.use(express.json()); //! this will parse json data
 
 app.use("/api/feedback/v1", feedbackRoutes);
+
+app.use(errorHandler);
 
 app.listen(process.env.PORT, (err) => {
   if (err) throw err;
@@ -35,3 +41,8 @@ app.listen(process.env.PORT, (err) => {
   ? in order to use custom defined scripts, 
   npm run scriptName 
 */
+
+//! CORS -> cross origin resource sharing -> cors third party module
+//? npm i cors
+
+//?http://localhost:9000/api/feedback/v1/delete/69c0b7e318c807b92c17b163

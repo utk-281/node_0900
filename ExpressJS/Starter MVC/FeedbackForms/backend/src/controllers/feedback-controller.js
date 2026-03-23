@@ -10,18 +10,22 @@ export const submitFeedback = async (req, res, next) => {
       payload: newFeedback,
     });
   } catch (error) {
-    // return res.status(500).json({
-    //   success: false,
-    //   message: "Error while creating a Feedback",
-    //   myErr: error,
-    // });
-    if (error.name === "ValidationError") {
-      return res.status(400).json({
-        success: false,
-        message: error.message,
-      });
-    }
-    // else if(){} try to handle duplicate error object from mongoose (code)
+    // //! this is for validation
+    // if (error.name === "ValidationError") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: error.message,
+    //   });
+    // }
+    // //! this is for duplicate data
+    // else if (error.code === 11000) {
+    //   return res.status(409).json({
+    //     //? conflict
+    //     success: false,
+    //     message: "username already present",
+    //   });
+    // }
+    next(error); //? passing the error to error middleware
   }
 };
 
@@ -44,19 +48,30 @@ export const getFeedbacks = async (req, res, next) => {
       payload: feedbacks,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
 export const getFeedback = async (req, res, next) => {
-  let { feedbackId } = req.params;
-  // console.log("feedbackId: ", feedbackId);
-  let feedback = await FeedbackModel.findById(feedbackId);
-  res.status(200).json({
-    success: true,
-    message: "Feedback fetched successfully",
-    payload: feedback,
-  });
+  try {
+    let { feedbackId } = req.params;
+    let feedback = await FeedbackModel.findById(feedbackId);
+
+    if (!feedback) {
+      return res.status(404).json({
+        success: false,
+        message: "feedback not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Feedback fetched successfully",
+      payload: feedback,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 //? params -> parameters
 
@@ -68,6 +83,13 @@ export const updateFeedback = async (req, res, next) => {
       req.body,
     );
 
+    if (!updatedData) {
+      return res.status(404).json({
+        success: false,
+        message: "feedback not found",
+      });
+    }
+
     res.status(200).json({
       message: "Updated Successfully",
       success: true,
@@ -75,7 +97,7 @@ export const updateFeedback = async (req, res, next) => {
     });
     //? findByIdAndUpdate(filter by _id, req.body, options)
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
@@ -83,13 +105,21 @@ export const deleteFeedback = async (req, res, next) => {
   try {
     let feedbackId = req.params.feedbackId;
     let deletedFeedback = await FeedbackModel.findByIdAndDelete(feedbackId);
+
+    if (!deletedFeedback) {
+      return res.status(404).json({
+        success: false,
+        message: "feedback not found",
+      });
+    }
+
     res.status(200).json({
       message: "Deleted Successfully",
       success: true,
       payload: deletedFeedback,
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
