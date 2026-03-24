@@ -1,11 +1,14 @@
-import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config({ quiet: true }); //? this method will read/parse the contents of .env file and add it to process.env
+
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import express from "express";
 import connectDB from "./config/database-config.js";
 
 import errorHandler from "./middlewares/error-middleware.js";
+import authRoutes from "./routes/auth-routes.js";
 import feedbackRoutes from "./routes/feedback-routes.js";
 
 connectDB();
@@ -13,11 +16,13 @@ connectDB();
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true })); //! this will parse urlencoded data
 app.use(express.json()); //! this will parse json data
 
 app.use("/api/feedback/v1", feedbackRoutes);
+app.use("/api/auth/v1", authRoutes);
 
 app.use(errorHandler);
 
