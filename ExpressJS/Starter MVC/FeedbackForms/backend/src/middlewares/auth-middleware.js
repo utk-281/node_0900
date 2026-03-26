@@ -16,9 +16,14 @@ export const authenticate = async (req, res, next) => {
   //   console.log("decodedToken: ", decodedToken);
 
   let userId = decodedToken.payload;
+
   //! find the user
-  let user = await UserModel.findById(userId);
-  console.log("user: ", user);
+  let user = await UserModel.findById(userId); //{_id: to ever}
+  if (!user)
+    return res.status(401).json({
+      success: false,
+      message: "Invalid session, please login again",
+    });
 
   //! modify the req object
   req.myUser = user;
@@ -30,6 +35,15 @@ decodedToken:  {
   payload: '69c210b15e6ee7af6f17811a',
   iat: 1774414120, // issued at (create)
   exp: 1774500520 // expiry (timestamps)
+}
+
+req = {
+  body:{},
+  cookies:{},
+  methods:{},
+  url:{},
+  myUser:{}
+
 }
 */
 

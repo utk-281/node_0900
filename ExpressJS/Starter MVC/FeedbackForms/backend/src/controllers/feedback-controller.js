@@ -90,7 +90,7 @@ export const getFeedback = async (req, res, next) => {
 
     let feedback = await FeedbackModel.findById(feedbackId).populate({
       path: "createdBy", // path, which we want to fill
-      select: "name email", // fields which we want to display
+      // select: "name email", // fields which we want to display
     });
 
     if (!feedback) {

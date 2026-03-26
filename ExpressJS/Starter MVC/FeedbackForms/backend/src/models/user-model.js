@@ -38,7 +38,7 @@ userSchema.pre("save", async function () {
   // console.log("hashedPassword: ", hashedPassword);
   this.password = hashedPassword;
   // console.log(this);
-});
+}); //~ this callback function will run before any new document is inserted in collection
 
 //? to define our own methods
 // schemaName.methods.methodName = function(){}
