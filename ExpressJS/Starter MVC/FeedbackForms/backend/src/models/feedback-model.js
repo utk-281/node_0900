@@ -23,6 +23,11 @@ let feedbackSchema = new mongoose.Schema({
     required: true, //? this will make sure that while saving username is there
     unique: true, //? this will make sure that while saving username is unique
   },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User", //? reference, this will be used while joining two or more collections
+  },
 });
 
 //! 3) for creating model/collection, use model()

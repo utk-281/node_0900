@@ -7,6 +7,7 @@ import cors from "cors";
 import express from "express";
 import connectDB from "./config/database-config.js";
 
+import { authenticate } from "./middlewares/auth-middleware.js";
 import errorHandler from "./middlewares/error-middleware.js";
 import authRoutes from "./routes/auth-routes.js";
 import feedbackRoutes from "./routes/feedback-routes.js";
@@ -21,7 +22,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); //! this will parse urlencoded data
 app.use(express.json()); //! this will parse json data
 
-app.use("/api/feedback/v1", feedbackRoutes);
+app.use("/api/feedback/v1", authenticate, feedbackRoutes);
 app.use("/api/auth/v1", authRoutes);
 
 app.use(errorHandler);

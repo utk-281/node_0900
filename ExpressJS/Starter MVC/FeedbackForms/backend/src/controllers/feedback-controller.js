@@ -1,9 +1,15 @@
 import FeedbackModel from "../models/feedback-model.js";
 
 export const submitFeedback = async (req, res, next) => {
+  console.log("from controller", req.myUser);
   try {
     let { message, rating, username } = req.body;
-    let newFeedback = await FeedbackModel.create({ message, rating, username });
+    let newFeedback = await FeedbackModel.create({
+      message,
+      rating,
+      username,
+      createdBy: req.myUser._id,
+    });
     res.status(201).json({
       success: true,
       message: "Feedback Submitted Successfully",
@@ -55,7 +61,37 @@ export const getFeedbacks = async (req, res, next) => {
 export const getFeedback = async (req, res, next) => {
   try {
     let { feedbackId } = req.params;
-    let feedback = await FeedbackModel.findById(feedbackId);
+    // let feedback = await FeedbackModel.findById(feedbackId);
+
+    // let feedback = await FeedbackModel.aggregate([
+    //   { $match: { _id: new mongoose.Types.ObjectId(feedbackId) } },
+    //   {
+    //     $lookup: {
+    //       from: "users",
+    //       foreignField: "_id",
+    //       localField: "createdBy",
+    //       as: "createdBy",
+    //     },
+    //   },
+    //   {
+    //     $unwind: "$createdBy",
+    //   },
+    //   {
+    //     $project: {
+    //       message: 1,
+    //       rating: 1,
+    //       username: 1,
+    //       "createdBy.name": 1,
+    //       "createdBy.email": 1,
+    //       _id: 0,
+    //     },
+    //   },
+    // ]);
+
+    let feedback = await FeedbackModel.findById(feedbackId).populate({
+      path: "createdBy", // path, which we want to fill
+      select: "name email", // fields which we want to display
+    });
 
     if (!feedback) {
       return res.status(404).json({
