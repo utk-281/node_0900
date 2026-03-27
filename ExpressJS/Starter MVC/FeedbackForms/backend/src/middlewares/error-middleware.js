@@ -7,10 +7,6 @@ const errorHandler = (err, req, res, next) => {
   //? short circuiting
 
   if (err.code == 11000) {
-    // let key = Object.keys(err.keyValue);
-    // let field = key[0];
-    // let message = `${field} already is use`;
-    // console.log("key: ", key);
     err.statusCode = 409;
     err.message = `${Object.keys(err.keyValue)[0].toUpperCase()} already in use`;
   } else if (err.name === "ValidationError") {
